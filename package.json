@@ -1,0 +1,28 @@
+{
+  "name": "photobooth",
+  "version": "1.0.0",
+  "description": "Take pictures with a Raspberry Pi and upload to Flickr",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gizmo-cda/photobooth.git"
+  },
+  "keywords": [
+    "raspberry",
+    "pi",
+    "photo",
+    "flickr"
+  ],
+  "author": "Kevin Lindsey",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/gizmo-cda/photobooth/issues"
+  },
+  "homepage": "https://github.com/gizmo-cda/photobooth#readme",
+  "dependencies": {
+    "flickrapi": "^0.6.0"
+  }
+}
