@@ -34,14 +34,16 @@ app.get('/picture', (req, res) => {
             };
 
             // close the mjpeg input stream
-            consumer.end();
+            // consumer.end();
+            streamRequest.abort();
 
             // send result
             res.end(JSON.stringify(result));
         }
     });
 
-    request("http://localhost:8080/stream/video.mjpeg").pipe(consumer).pipe(writer);
+    var streamRequest = request("http://localhost:8080/stream/video.mjpeg");
+    streamRequest.pipe(consumer).pipe(writer);
 });
 
 // start server
