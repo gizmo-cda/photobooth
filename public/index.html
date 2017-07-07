@@ -4,10 +4,42 @@
     <title>GizMotion Photobooth</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes"/>
     <link rel="stylesheet" type="text/css" href="css/common.css">
+    <script type="text/javascript" src="js/xhr.js"></script>
+    <script type="text/javascript">
+      let MAX_IMAGE_COUNT = 3;
+      let images = [];
+
+      function snapPhoto() {
+        xhr.get("/picture", showPhoto);
+      }
+
+      function showPhoto(err, data) {
+        if (data && data.success) {
+          let photos = document.getElementById("photos");
+          let image = new Image();
+
+          image.width = 128;
+          image.height = 96;
+          image.src = data.filename;
+
+          images.push(image);
+
+          if (images.length > MAX_IMAGE_COUNT) {
+            let firstImage = images.shift();
+
+            photos.removeChild(firstImage);
+          }
+
+          photos.appendChild(image);
+        }
+      }
+    </script>
   </head>
   <body>
     <div class="content">
-      <img class="center" src="http://192.168.0.1:8080/stream/video.mjpeg" width="480" height="360"/>
+      <img class="center" src="http://192.168.0.1:8080/stream/video.mjpeg" width="320" height="240"/>
+      <input type="button" onclick="snapPhoto()" value="Snap Photo" />
+      <div id="photos" class="photos"></div>
     </div>
   </body>
 </html>
