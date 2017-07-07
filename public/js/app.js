@@ -1,4 +1,4 @@
-let MAX_IMAGE_COUNT = 3;
+let MAX_IMAGE_COUNT = 9;
 let images = [];
 var count = 3;
 

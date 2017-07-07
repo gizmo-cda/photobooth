@@ -8,20 +8,23 @@ body {
 	color: rgb(210,210,210);
 }
 
-.content {
-	padding: 0px;
-	min-height: 100%;
-	margin: 0 auto -60px;
+#container {
+    width: 780px;
+    margin: 20px auto;
 }
 
-img.center {
-	margin: auto;
-	position: absolute;
-	top: 0; left: 0; bottom: 0; right: 0;
+#preview {
+    float: left;
+    width: 360px;
+    text-align: center;
 }
 
-.photos {
-	position: absolute;
-	top: 0; left: 0; bottom: 0; right: 0;
-	display: block;
+#photos {
+    float: left;
+    width: 420px;
+}
+
+#countLabel {
+	margin: 0;
+	font-size: 32px;
 }
