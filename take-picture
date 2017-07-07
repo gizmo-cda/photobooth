@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+raspistill \
+  --width 640 \
+  --height 480 \
+  --quality 80 \
+  --output gizmotion-%d.jpg \
+  --timeout 3000 \
+  --timestamp \
+  --nopreview
