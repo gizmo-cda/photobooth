@@ -4,6 +4,7 @@
   "description": "Take pictures with a Raspberry Pi and upload to Flickr",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,6 +24,11 @@
   },
   "homepage": "https://github.com/gizmo-cda/photobooth#readme",
   "dependencies": {
-    "flickrapi": "^0.6.0"
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "file-on-write": "^1.1.1",
+    "flickrapi": "^0.6.0",
+    "mjpeg-consumer": "^1.1.0",
+    "morgan": "^1.8.2"
   }
 }
