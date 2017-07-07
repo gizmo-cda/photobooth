@@ -1,29 +1,52 @@
 #!/usr/bin/env node
 
-var Flickr = require("flickrapi"),
-    flickrOptions = {
-        api_key: process.env.FLICKR_KEY,
-        secret: process.env.FLICKR_SECRET,
-        user_id: process.env.FLICKR_USER_ID,
-        access_token: process.env.FLICKR_ACCESS_TOKEN,
-        access_token_secret: process.env.FLICKR_ACCESS_TOKEN_SECRET,
-        permissions: 'delete'
-    };
+let express = require('express'),
+    bodyParser = require('body-parser'),
+    morgan = require('morgan');
 
-var uploadOptions = {
-    photos: [{
-        title: "Test Upload",
-        tags: [ "me", "test" ],
-        photo: "./test.jpg"
-    }]
-};
+// create app
+var app = express();
 
-Flickr.upload(uploadOptions, flickrOptions, function(err, result) {
-    if (err) {
-        return console.error(err);
-    }
+// app configuration
+app.set('port', (process.env.PORT || 8081));
 
-    console.log("photos uploaded", result);
+// configure middleware
+app.use(morgan('dev'));
+app.use(express.static('public'));
 
-    process.exit(1);
+// configure routes
+app.get('/picture', (req, res) => {
+    var request = require("request");
+    var MjpegConsumer = require("mjpeg-consumer");
+    var FileOnWrite = require("file-on-write");
+
+    var consumer = new MjpegConsumer();
+    var writer = new FileOnWrite({ 
+        path: './public/photos',
+        ext: '.jpg',
+        onwrite: (filename) => {
+            // trim off "public/" so the web page can access the image with the result value
+            filename = filename.substr("public/".length);
+
+            let result = {
+                success: true,
+                filename: filename
+            };
+
+            // close the mjpeg input stream
+            consumer.end();
+
+            // send result
+            res.end(JSON.stringify(result));
+        }
+    });
+
+    request("http://localhost:8080/stream/video.mjpeg").pipe(consumer).pipe(writer);
+});
+
+// start server
+var server = app.listen(app.get('port'), function() {
+    var port = server.address().port;
+
+    console.log("Server listening on port %s", port);
 });
