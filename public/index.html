@@ -8,6 +8,22 @@
     <script type="text/javascript">
       let MAX_IMAGE_COUNT = 3;
       let images = [];
+      var count = 3;
+
+      function countDown() {
+        let countLabel = document.getElementById("countLabel");
+
+        if (count > 0) {
+          countLabel.innerHTML = String(count);
+          count--;
+          setTimeout(countDown, 1000)
+        }
+        else {
+          countLabel.innerHTML = "";
+          count = 3;
+          snapPhoto();
+        }
+      }
 
       function snapPhoto() {
         xhr.get("/picture", showPhoto);
@@ -37,9 +53,13 @@
   </head>
   <body>
     <div class="content">
-      <img class="center" src="http://192.168.0.1:8080/stream/video.mjpeg" width="320" height="240"/>
-      <input type="button" onclick="snapPhoto()" value="Snap Photo" />
-      <div id="photos" class="photos"></div>
+      <div class="center">
+        <img class="center" src="http://192.168.0.1:8080/stream/video.mjpeg" width="320" height="240"/>
+    </div>
+    <div class="photos">
+      <input type="button" onclick="countDown()" value="Snap Photo" />
+      <div id="photos"></div>
+      <p id="countLabel"></p>
     </div>
   </body>
 </html>
